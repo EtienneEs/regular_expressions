@@ -1,0 +1,23 @@
+{
+    "log_config": {
+        "DEBUG": false,
+        "LOGGING": true,
+        "log_file": "Log.txt"
+    },
+    "filepaths": {
+        "parent": ".",
+        "source": "source",
+        "processed": "processed",
+        "skipped": "skipped",
+        "warning": "warning",
+        "outputfile": "extracted_data.csv",
+        "UNC_processed": "unc_path/processed"
+    },
+    "commands": {
+        "process_criteria": "process_criteria",
+        "move_processed": true,
+        "move_skipped": true,
+        "warn_if_more_than_1Detail": true,
+        "move_undhandled_files_to_warning": true
+    }
+}

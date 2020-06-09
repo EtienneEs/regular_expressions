@@ -1,0 +1,2 @@
+reference_id,job_number,distribution_order_number,airwaybill,path,unc_path
+123457,12345,123456,123456789,source\Response_123457.txt,unc_path\processed\Response_123457.txt
