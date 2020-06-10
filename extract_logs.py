@@ -6,6 +6,7 @@ import os
 import pandas as pd
 import re
 import logging
+from sys import exit as sysexit
 
 
 class Settings():
@@ -331,7 +332,6 @@ class Shipments(Settings):
         print(message)
         return df
 
-
     def extract_shipment_info(self, df, textfile, rawtext):
         """Creates Shipment object based on the input and appends the
         extracted information to the dataframe (df).
@@ -413,7 +413,7 @@ def run():
      ======================
     """)
     time.sleep(10)
-    exit()
+    sysexit(0)
 
 
 if __name__ == "__main__":
