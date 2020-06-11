@@ -261,7 +261,28 @@ class Shipments(Settings):
             is True.
         """
         if self.move_undhandled_files_to_warning:
-            os.rename(textfile, self.warning / textfile.name)
+            self._move_file_safely(textfile, self.warning / textfile.name)
+
+    def _move_file_safely(self, path, destination):
+        """Safely moves a file to destination.
+
+        Arguments:
+            path (Path): Current filepath of the file.
+            destination (Path): Destination path of the file.
+
+        """
+        try:
+            message = """File is moved: {} -> {}""".format(path, destination)
+            logging.debug(message)
+            os.rename(path, destination)
+        except PermissionError:
+            message = """File in use. File could not be moved. File:{}""".format(path.name)
+            logging.error(message)
+        except FileNotFoundError:
+            message = """File was not found. {}""".format(path.name)
+            logging.error(message)
+        except:
+            message = """An undefined error occured while trying to move: {}""".format(path)
 
     def extract_information(self):
         """Loops through textfiles and extracts the information.
@@ -311,7 +332,7 @@ class Shipments(Settings):
                     processed_count += 1
                     if self.move_processed:
                         # Move processed file to processed folder.
-                        os.rename(textfile, self.processed / textfile.name)
+                        self._move_file_safely(textfile, self.processed / textfile.name)
                 elif not patterns_found:
                     # There was not a match with the regular expressions
                     # move file into warnings
@@ -321,7 +342,7 @@ class Shipments(Settings):
                 skipped_count += 1
                 if self.move_skipped:
                     # Move skipped file to skipped folder.
-                    os.rename(textfile, self.skipped / textfile.name)
+                    self._move_file_safely(textfile, self.skipped / textfile.name)
         # Assign dataframe to Attribute
         self.df = df
         message = f"""Total files handled: {total_count} Processed files: {processed_count} Skipped files: {skipped_count} Warnings:{warnings_count}"""
